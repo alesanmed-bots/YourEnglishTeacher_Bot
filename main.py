@@ -8,8 +8,12 @@ from importlib import import_module
 import inflection
 
 import utils.logger as logger
+import utils.periodic_job as periodic_job
 import configurations.bot_config as bot_config
 from commands import commands
+
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
 
 updater = None
 
@@ -39,6 +43,14 @@ if __name__ == "__main__":
     dispatcher = updater.dispatcher
 
     load_commands(dispatcher)
+
+    scheduler = BackgroundScheduler()
+
+    trigger = CronTrigger(year='*', month='*', day='*', hour='*', minute='*', second='*/30')
+
+    scheduler.add_job(periodic_job.send_daily_message, trigger=trigger, args=(updater.bot,))
+
+    scheduler.start()
     
     if(bot_config.WEBHOOK):
         signal.signal(signal.SIGINT, graceful_exit)
