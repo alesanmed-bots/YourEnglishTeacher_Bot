@@ -4,7 +4,7 @@ from os.path import dirname as dir
 
 path.append(dir(path[0]))
 
-from connectors import add_word_transactions
+import connectors
 import telegram.ext as ext
 
 WORD, MEANING, MEANING_ERROR, LANGUAGE_ERROR = range(4)
@@ -29,10 +29,17 @@ def add_word(bot, update):
     global _NEW_WORD_
     _NEW_WORD_ = {}
 
-    update.message.reply_text("Let's add a word. You can cancel the process at any moment by sending" + 
-                              " /cancel.\n\nFirst, which word do you want to add?")
+    next_state = ext.ConversationHandler.END
 
-    return WORD
+    if connectors.authentication.check_authorization(
+            update.message.from_user.id):
+        update.message.reply_text("Let's add a word. You can cancel the process at any moment by sending" + 
+                              " /cancel.\n\nFirst, which word do you want to add?")
+        next_state = WORD
+    else:
+        update.message.reply_text("Sorry but you don't have enough priviledges to add a word.")
+
+    return next_state
 
 def set_word(bot, update):
     global _NEW_WORD_
@@ -53,7 +60,7 @@ def set_meaning(bot, update):
     if word_meaning:
         _NEW_WORD_['meaning'] = word_meaning
 
-        add_word_transactions.insert_word(_NEW_WORD_)
+        connectors.words.insert_word(_NEW_WORD_)
 
         _NEW_WORD_ = None
 
