@@ -19,3 +19,10 @@ def register_user(user_id, username, chat_id):
     })
 
     return 1
+
+def get_all_users():
+    client = mongo.connect()
+
+    db = client[bot_config.DB_NAME]
+
+    return db.registered_users.find({})
