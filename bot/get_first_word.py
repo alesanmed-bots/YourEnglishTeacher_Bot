@@ -5,6 +5,8 @@ from os.path import dirname as dir
 path.append(dir(path[0]))
 
 import connectors.words as words
+from utils import word_utils
+import telegram
 import telegram.ext as ext
 
 def main(dispatcher):
@@ -14,4 +16,4 @@ def main(dispatcher):
 def get_first_word(bot, update):
     word = words.get_first_word()
 
-    update.message.reply_text('%s - %s' % (word['word'], word['meaning']))
+    word_utils.send_daily_word(word, update.message.from_user.id, bot)
