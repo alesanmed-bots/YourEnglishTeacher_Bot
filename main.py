@@ -58,3 +58,5 @@ if __name__ == "__main__":
         updater.bot.set_webhook(url=bot_config.WEBHOOK_URL)
     else:
         updater.start_polling()
+
+        updater.idle()
