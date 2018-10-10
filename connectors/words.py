@@ -37,6 +37,8 @@ def get_daily_word():
 
     db.words.update_one({'_id': random_word['_id']}, {'$set': {'fetched': 1}})
 
+    mongo.close(client)
+
     return random_word
 
 def get_first_word():
@@ -56,4 +58,22 @@ def get_first_word():
 
     random_word = list(db.words.aggregate(aggregation_pipeline))[0]
 
+    mongo.close(client)
+
     return random_word
+
+def check_duplicate_word(word):
+    client = mongo.connect()
+
+    db = client[bot_config.DB_NAME]
+
+    duplicate = db.words.count_documents({
+        'word': {
+            '$regex': word,
+            '$options': 'i'
+        }
+    })
+
+    mongo.close(client)
+
+    return duplicate
