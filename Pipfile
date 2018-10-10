@@ -8,6 +8,7 @@ python-telegram-bot = "*"
 inflection = "*"
 pymongo = "*"
 apscheduler = "*"
+requests = "*"
 
 [dev-packages]
 pylint = "*"
