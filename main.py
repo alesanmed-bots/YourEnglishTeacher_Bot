@@ -24,7 +24,7 @@ def load_commands(dispatcher):
     for file_name in files:
         command, _ = os.path.splitext(file_name)
 
-        module = import_module(f'.{command}', 'bot')
+        module = import_module('.%s' % (command,), 'bot')
 
         module.main(dispatcher)
         
@@ -36,7 +36,7 @@ def graceful_exit(signum, frame):
     sys.exit(1)
 
 if __name__ == "__main__":
-    logger.init_logger(f'logs/{bot_config.NAME}.log')
+    logger.init_logger('logs/%s.log' % (bot_config.NAME,))
 
     updater = Updater(token=bot_config.TOKEN)
 
