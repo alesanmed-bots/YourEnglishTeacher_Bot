@@ -12,10 +12,11 @@ def connect():
     username = urllib.parse.quote_plus(bot_config.DB_USER)
     password = urllib.parse.quote_plus(bot_config.DB_PASS)
     db_ip = urllib.parse.quote_plus(bot_config.DB_IP)
+    db_port = urllib.parse.quote_plus(bot_config.DB_PORT)
     db_name = urllib.parse.quote_plus(bot_config.DB_NAME)
 
-    client = MongoClient('mongodb://%s:%s@%s/%s' % 
-                        (username, password, db_ip, db_name))
+    client = MongoClient('mongodb://%s:%s@%s:%s/%s' % 
+                        (username, password, db_ip, db_port, db_name))
 
     return client
 
