@@ -12,11 +12,13 @@ def register_user(user_id, username, chat_id):
 
     db = client[bot_config.DB_NAME]
 
-    db.registered_users.insert_one({
-        'user_id': user_id,
-        'username': username,
-        'chat_id': chat_id
-    })
+    if db.registered_users.count_documents(
+        {'user_id': user_id}) == 0:
+        db.registered_users.insert_one({
+            'user_id': user_id,
+            'username': username,
+            'chat_id': chat_id
+        })
 
     return 1
 
