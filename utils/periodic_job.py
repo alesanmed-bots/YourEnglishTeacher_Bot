@@ -15,4 +15,4 @@ def send_daily_message(bot):
     daily_word = words.get_daily_word()
 
     for user in users_to_send:
-        word_utils.send_daily_word(daily_word, bot, user['chat_id'])
+        word_utils.send_daily_word(daily_word, user['chat_id'], bot)
