@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     scheduler = BackgroundScheduler()
 
-    trigger = CronTrigger(year='*', month='*', day='*', hour='*', minute='*', second='*/30')
+    trigger = CronTrigger(year='*', month='*', day='*', hour='19', minute='0', second='0')
 
     scheduler.add_job(periodic_job.send_daily_message, trigger=trigger, args=(updater.bot,))
 
