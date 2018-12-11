@@ -6,6 +6,7 @@ path.append(dir(path[0]))
 
 from configurations import bot_config
 from . import mongo_connection as mongo
+import datetime
 
 def insert_word(word):
     client = mongo.connect()
@@ -77,3 +78,16 @@ def check_duplicate_word(word):
     mongo.close(client)
 
     return duplicate
+
+def insert_suggestion(suggestion):
+    client = mongo.connect()
+
+    db = client[bot_config.DB_NAME]
+
+    suggestion['added'] = datetime.datetime.now()
+
+    inserted_id = db.suggestions.insert_one(suggestion).inserted_id
+
+    mongo.close(client)
+
+    return inserted_id

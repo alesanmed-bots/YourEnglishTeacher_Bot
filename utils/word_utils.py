@@ -7,7 +7,7 @@ path.append(dir(path[0]))
 import os
 import telegram
 from utils import logger
-
+from connectors import words
 
 def __build_daily_message(word):
     message = '%s' % (word['word'],)
@@ -50,3 +50,13 @@ def send_daily_word(word, chat_id, bot):
                     )), 'rb'))
     except Exception as e:
         logger.get_logger().warning('Audio could not be sended, reason: %s' % (e,))
+
+def insert_suggestion(suggestion, user_id, username):
+    document = {
+        'suggestion': suggestion,
+        'user_id': user_id,
+        'username': username or 'No name',
+        'status': None
+    }
+
+    return words.insert_suggestion(document)
