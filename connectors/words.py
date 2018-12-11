@@ -7,6 +7,8 @@ path.append(dir(path[0]))
 from configurations import bot_config
 from . import mongo_connection as mongo
 import datetime
+from pymongo import ReturnDocument
+from bson import ObjectId
 
 def insert_word(word):
     client = mongo.connect()
@@ -91,3 +93,32 @@ def insert_suggestion(suggestion):
     mongo.close(client)
 
     return inserted_id
+
+def get_suggestions():
+    client = mongo.connect()
+
+    db = client[bot_config.DB_NAME]
+
+    suggestions = db.suggestions.find({}).sort('added')
+
+    mongo.close(client)
+
+    return suggestions
+
+def update_suggestion(suggestion_id, new_status):
+    client = mongo.connect()
+
+    db = client[bot_config.DB_NAME]
+
+    updated_suggestion = db.suggestions.find_one_and_update(
+        {'_id': ObjectId(suggestion_id)},
+        {
+            '$set': {
+                'status': int(new_status),
+                'last_update': datetime.datetime.now()
+                },
+        }, return_document=ReturnDocument.AFTER)
+
+    mongo.close(client)
+
+    return updated_suggestion
