@@ -50,8 +50,8 @@ def __review_message(bot, update):
 
     _BROADCAST_MESSAGE_ = update.message.text_markdown
 
-    update.message.reply_text("{}\n\nThat message is about to be sent to all registered users. Are you sure? (Yes/No)"
-                                .format(_BROADCAST_MESSAGE_), parse_mode=telegram.ParseMode.MARKDOWN)
+    update.message.reply_markdown("{}\n\nThat message is about to be sent to all registered users. Are you sure? (Yes/No)"
+                                .format(_BROADCAST_MESSAGE_))
 
     return CONFIRMATION
 

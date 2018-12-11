@@ -11,7 +11,6 @@ import bot
 import utils.logger as logger
 import utils.periodic_job as periodic_job
 import configurations.bot_config as bot_config
-from commands import commands
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
