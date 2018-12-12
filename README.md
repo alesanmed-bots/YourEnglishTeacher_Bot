@@ -9,7 +9,7 @@
 <!-- /TOC -->
 
 ## Bot description
-This a bot for learning new english vocabulary. When you send the bot the `/start` command, you'll be automatically registered. Each day, you'll receive a new word with its definition, use examples and an audio for knowing how to pronounce it.
+This is a bot for learning new english vocabulary. When you send the bot the `/start` command, you'll be automatically registered. Each day, you'll receive a new word with its definition, examples with the word in use and an audio for learning how to pronounce it.
 
 ## Bot usage
 To start using the bot just [talk to it](https://telegram.me/YourEnglishTeacher_bot). The bot commands are the following:
