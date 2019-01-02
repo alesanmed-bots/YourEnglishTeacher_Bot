@@ -13,7 +13,7 @@ from connectors import words
 def main(dispatcher):
     get_suggestions_handler = ext.CommandHandler('get_suggestions', __get_suggestions)
 
-    get_suggestions_callback_handler = ext.CallbackQueryHandler(__handle_suggestion_callback)
+    get_suggestions_callback_handler = ext.CallbackQueryHandler(__handle_suggestion_callback, pattern=r'^[1,0],.*$')
     
     dispatcher.add_handler(get_suggestions_handler)
     dispatcher.add_handler(get_suggestions_callback_handler)
